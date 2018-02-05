@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-MAINTAINER Tran Duc Thang <thangtd90@gmail.com>
+MAINTAINER Nikolay Volkov <gitkv@ya.ru>
 
 ENV TERM xterm
 
@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libmcrypt-dev \
     vim \
+    nano \
     zlib1g-dev libicu-dev g++ \
     --no-install-recommends \
     && rm -r /var/lib/apt/lists/*
@@ -28,15 +29,13 @@ RUN docker-php-ext-configure gd \
 RUN docker-php-ext-configure intl
 
 # Install mongodb, xdebug
-RUN pecl install mongodb \
-    && pecl install xdebug \
+RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 # Install extensions using the helper script provided by the base image
 RUN docker-php-ext-install \
     mcrypt \
     bcmath \
-    pdo_mysql \
     pdo_pgsql \
     gd \
     intl \
